@@ -48,31 +48,37 @@ if(i < 0)
 i = -i;
 putchar('-');
 }
-puts(convert(i,10));
-break;
-
-case 'u' : i = va_arg(arg, unsigned int);
 puts(convert(i, 10));
 break;
 
-case 'b' : i = va_arg(arg, unsigned int);
+case 'u' :
+i = va_arg(arg, unsigned int);
+puts(convert(i, 10));
+break;
+
+case 'b' :
+i = va_arg(arg, unsigned int);
 puts(convert(i, 2));
 break;
 
-case 'o': i = va_arg(arg,unsigned int);
+case 'o':
+i = va_arg(arg, unsigned int);
 puts(convert(i,8));
 break;
 
-case 's': s = va_arg(arg,char *);
+case 's':
+s = va_arg(arg, char *);
 puts(s);
 return (strlen(s) - 1);
 
-case 'x': i = va_arg(arg,unsigned int);
+case 'x':
+i = va_arg(arg, unsigned int);
 puts(convertHex(i,16));
 break;
 
-case 'X': i = va_arg(arg,unsigned int);
-puts(convert(i,16));
+case 'X':
+i = va_arg(arg, unsigned int);
+puts(convert(i, 16));
 break;
 }
 }
@@ -81,7 +87,7 @@ free(arg);
 free(traverse);
 free(s);
 va_end(arg);
-return(i);
+return (i);
 }
 
 
@@ -93,20 +99,19 @@ return(i);
  */
 char *convert(unsigned int num, int base)
 {
-static char Representation[]= "0123456789ABCDEF";
+const char Representation[] = "0123456789ABCDEF";
 static char buffer[50];
 char *ptr;
 
 ptr = &buffer[49];
 *ptr = '\0';
 
-do
-{
-*--ptr = Representation[num%base];
+do{
+*--ptr = Representation[num % base];
 num /= base;
-}while(num != 0);
+} while (num != 0);
 
-return(ptr);
+return (ptr);
 }
 
 /**
@@ -117,20 +122,19 @@ return(ptr);
  */
 char *convertHex(unsigned int num, int base)
 {
-static char Representation[]= "0123456789abcdef";
+const char Representation[] = "0123456789abcdef";
 static char buffer[50];
 char *ptr;
 
 ptr = &buffer[49];
 *ptr = '\0';
 
-do
-{
-*--ptr = Representation[num%base];
+do{
+*--ptr = Representation[num % base];
 num /= base;
-}while(num != 0);
+} while (num != 0);
 
-return(ptr);
+return (ptr);
 }
 
 #endif
