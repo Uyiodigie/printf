@@ -8,7 +8,7 @@
 #include <limits.h>
 #include <stdarg.h>
 
-int _printf(char* format,...);
+int _printf(const char* format,...);
 char *convert(unsigned int num, int base);
 char *convertHex(unsigned int num, int base);
 
@@ -17,7 +17,7 @@ char *convertHex(unsigned int num, int base);
  * @format: format string
  * Return: length of formatted output string
  */
-int _printf(char* format,...)
+int _printf(const char* format,...)
 {
 char *traverse;
 unsigned int i;
@@ -26,7 +26,7 @@ char *s;
 va_list arg;
 va_start(arg, format);
 
-for(traverse = format; *traverse != '\0'; traverse++)
+for(traverse = (char *)format ; *traverse != '\0'; traverse++)
 {
 while( *traverse != '%' )
 {
