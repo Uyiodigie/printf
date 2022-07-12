@@ -1,76 +1,134 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <limits.h>
 #include <stdarg.h>
 
-/**
- * struct flags - struct containing flags to "turn on"
- * when a flag specifier is passed to _printf()
- * @plus: flag for the '+' character
- * @space: flag for the ' ' character
- * @hash: flag for the '#' character
- */
-typedef struct flags
-{
-	int plus;
-	int space;
-	int hash;
-} flags_t;
+int _printf(char* format,...);
+char *convert(unsigned int num, int base);
+char *convertHex(unsigned int num, int base);
 
 /**
- * struct printHandler - struct to choose the right function depending
- * on the format specifier passed to _printf()
- * @c: format specifier
- * @f: pointer to the correct printing function
+ * _printf - produces output according to a format.
+ * @format: format string
+ * Return: length of formatted output string
  */
-typedef struct printHandler
+int _printf(char* format,...)
 {
-	char c;
-	int (*f)(va_list ap, flags_t *f);
-} ph;
+char *traverse;
+unsigned int i;
+char *s;
 
-/* print_nums */
-int print_int(va_list l, flags_t *f);
-void print_number(int n);
-int print_unsigned(va_list l, flags_t *f);
-int count_digit(int i);
+va_list arg;
+va_start(arg, format);
 
-/* print_bases */
-int print_hex(va_list l, flags_t *f);
-int print_hex_big(va_list l, flags_t *f);
-int print_binary(va_list l, flags_t *f);
-int print_octal(va_list l, flags_t *f);
+for(traverse = format; *traverse != '\0'; traverse++)
+{
+while( *traverse != '%' )
+{
+putchar(*traverse);
+traverse++;
+}
 
-/* converter */
-char *convert(unsigned long int num, int base, int lowercase);
+traverse++;
+switch(*traverse)
+{
+case 'c' : i = va_arg(arg,int);
+putchar(i);
+return (1);
 
-/* _printf */
-int _printf(const char *format, ...);
+case 'd' : i = va_arg(arg,int);
+if(i<0)
+{
+i = -i;
+putchar('-');
+}
+puts(convert(i,10));
+break;
 
-/* get_print */
-int (*get_print(char s))(va_list, flags_t *);
+case 'u' : i = va_arg(arg, unsigned int);
+puts(convert(i, 10));
+break;
 
-/* get_flag */
-int get_flag(char s, flags_t *f);
+case 'b' : i = va_arg(arg, unsigned int);
+puts(convert(i, 2));
+break;
 
-/* print_alpha */
-int print_string(va_list l, flags_t *f);
-int print_char(va_list l, flags_t *f);
+case 'o': i = va_arg(arg,unsigned int);
+puts(convert(i,8));
+break;
 
-/* write_funcs */
-int _putchar(char c);
-int _puts(char *str);
+case 's': s = va_arg(arg,char *);
+puts(s);
+return (strlen(s) - 1);
 
-/* print_custom */
-int print_rot13(va_list l, flags_t *f);
-int print_rev(va_list l, flags_t *f);
-int print_bigS(va_list l, flags_t *f);
+case 'x': i = va_arg(arg,unsigned int);
+puts(convertHex(i,16));
+break;
 
-/* print_address */
-int print_address(va_list l, flags_t *f);
+case 'X': i = va_arg(arg,unsigned int);
+puts(convert(i,16));
+break;
+}
+}
 
-/* print_percent */
-int print_percent(va_list l, flags_t *f);
+free(arg);
+free(traverse);
+//free(i);
+free(s);
+va_end(arg);
+}
+
+/**
+ * convert - coverts from int to base when using %x
+ * @num: number to convert
+ * @base: base of the number
+ * Return: length of formatted output string
+ */
+char *convert(unsigned int num, int base)
+{
+static char Representation[]= "0123456789ABCDEF";
+static char buffer[50];
+char *ptr;
+
+ptr = &buffer[49];
+*ptr = '\0';
+
+do
+{
+*--ptr = Representation[num%base];
+num /= base;
+}while(num != 0);
+
+return(ptr);
+}
+
+/**
+ * convertHex - coverts from int to hex when using %x
+ * @num: number to convert
+ * @base: base of the number
+ * Return: length of formatted output string
+ */
+char *convertHex(unsigned int num, int base)
+{
+static char Representation[]= "0123456789abcdef";
+static char buffer[50];
+char *ptr;
+
+ptr = &buffer[49];
+*ptr = '\0';
+
+do
+{
+*--ptr = Representation[num%base];
+num /= base;
+}while(num != 0);
+
+return(ptr);
+}
 
 #endif
