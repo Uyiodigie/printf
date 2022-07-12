@@ -8,7 +8,7 @@
 #include <limits.h>
 #include <stdarg.h>
 
-int _printf(const char *format,...);
+int _printf(const char *format, ...);
 char *convert(unsigned int num, int base);
 char *convertHex(unsigned int num, int base);
 
@@ -17,7 +17,7 @@ char *convertHex(unsigned int num, int base);
  * @format: format string
  * Return: length of formatted output string
  */
-int _printf(const char *format,...)
+int _printf(const char *format, ...)
 {
 char *traverse;
 int i = 0;
@@ -43,7 +43,7 @@ putchar(i);
 break;
 case 'd':
 i = va_arg(arg, int);
-if(i < 0)
+if (i < 0)
 {
 i = -i;
 putchar('-');
@@ -51,19 +51,19 @@ putchar('-');
 puts(convert(i, 10));
 break;
 
-case 'u' :
+case 'u':
 i = va_arg(arg, unsigned int);
 puts(convert(i, 10));
 break;
 
-case 'b' :
+case 'b':
 i = va_arg(arg, unsigned int);
 puts(convert(i, 2));
 break;
 
 case 'o':
 i = va_arg(arg, unsigned int);
-puts(convert(i,8));
+puts(convert(i, 8));
 break;
 
 case 's':
@@ -73,7 +73,7 @@ return (strlen(s) - 1);
 
 case 'x':
 i = va_arg(arg, unsigned int);
-puts(convertHex(i,16));
+puts(convertHex(i, 16));
 break;
 
 case 'X':
@@ -106,7 +106,7 @@ char *ptr;
 ptr = &buffer[49];
 *ptr = '\0';
 
-do{
+do {
 *--ptr = Representation[num % base];
 num /= base;
 } while (num != 0);
@@ -129,7 +129,7 @@ char *ptr;
 ptr = &buffer[49];
 *ptr = '\0';
 
-do{
+do {
 *--ptr = Representation[num % base];
 num /= base;
 } while (num != 0);
