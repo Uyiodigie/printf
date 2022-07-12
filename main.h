@@ -20,8 +20,8 @@ char *convertHex(unsigned int num, int base);
 int _printf(const char* format,...)
 {
 char *traverse;
-unsigned int i;
-char *s;
+int i = 0;
+char *s = NULL;
 
 va_list arg;
 va_start(arg, format);
@@ -78,10 +78,11 @@ break;
 
 free(arg);
 free(traverse);
-//free(i);
 free(s);
 va_end(arg);
+return(i);
 }
+
 
 /**
  * convert - coverts from int to base when using %x
