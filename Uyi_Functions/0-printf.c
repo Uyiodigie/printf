@@ -1,10 +1,6 @@
+
 #include "main.h"
 
-/**
- * _printf - produces output according to a format.
- * @format: format string
- * Return: length of formatted output string
- */
 int _printf(const char *format, ...)
 {
 	int (*pfunc)(va_list, flags_t *);
