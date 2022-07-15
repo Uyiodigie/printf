@@ -36,6 +36,12 @@ int _printf(const char *format, ...)
 				case '%':
 					count += _putchar('%');
 					break;
+<<<<<<< HEAD:exp/_printf.c
+=======
+				case 'd':
+					count += print_decimal(va_arg(data, int));
+					break;
+>>>>>>> origin/master:_printf.c
 				default:
 					break;
 			}
