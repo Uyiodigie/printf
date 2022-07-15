@@ -35,7 +35,7 @@ int _printf(const char *format, ...)
 					count += _putchar('%');
 					break;
 				case 'd':
-					count += _print_decimal(va_arg(data, int));
+					count += print_decimal(va_arg(data, int));
 					break;
 				default:
 					break;
@@ -43,7 +43,7 @@ int _printf(const char *format, ...)
 			i += 2;
 		}
 	}
-	var_end(data)
+	va_end(data);
 	return (count);
 }
 

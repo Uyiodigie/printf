@@ -7,11 +7,11 @@
  */
 int print_decimal(int value)
 {
-  int count = 0;
+	int count = 0;
 
-  if (value >= 0)
-  {
-    
-  }
-  return (count);
+	if (value >= 0)
+	{
+
+	}
+	return (count);
 }
