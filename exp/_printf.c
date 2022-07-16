@@ -9,7 +9,9 @@
  */
 int _printf(const char *format, ...)
 {
-	int count = 0, i = 0;
+	int count = 0;
+  int i = 0;
+  
 	va_list data;
 
 	va_start(data, format);
@@ -34,9 +36,12 @@ int _printf(const char *format, ...)
 				case '%':
 					count += _putchar('%');
 					break;
+<<<<<<< HEAD:exp/_printf.c
+=======
 				case 'd':
 					count += print_decimal(va_arg(data, int));
 					break;
+>>>>>>> origin/master:_printf.c
 				default:
 					break;
 			}

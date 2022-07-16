@@ -1,42 +1,48 @@
 #include "main.h"
-#include <stdarg.h>
 #include <stdio.h>
-#include <unistd.h>
-#include <string.h>
+#include <stdarg.h>
 
+/**
+ * _printf - custom made printf function
+ * @format: number of characters of the string
+ * Return: success
+ */
 int _printf(const char *format, ...)
 {
-	int count = 0, i;
-	int temp_count = 0;
-	int j = 0;
-	char *s;
-
+	int count = 0;
+  int i = 0;
+  
 	va_list data;
+
 	va_start(data, format);
 
-	for (i = 0; format[i] != '\0'; i++) {
-	/* count the number of characters*/
-	/* print the screen the character counted*/
+	for (i = 0; format[i] != '\0'; )
+	{
 		if (format[i] != '%')
 		{
-			temp_count += _putchar(format[i]);
+			count += _putchar(format[i]);
+			i++;
 		}
-		else if (format[i] == '%' && format[i + 1] == 'c')
+		else if (format[i] == '%' && format[i + 1] != ' ')
 		{
-			i += 1;
-			j = va_arg(data, int);
-			_putchar(j);
-			temp_count += 1;
-		}
-		else if (format[i] == '%' && format[i + 1] == 's')
-		{
-			i += 1;
-			s = va_arg(data, char *);
-			write(1, s, strlen(s));
-			temp_count += strlen((char *)s);
+			switch (format[i + 1])
+			{
+				case 'c':
+					count += _putchar(va_arg(data, int));
+					break;
+				case 's':
+					count += print_string(va_arg(data, char *));
+					break;
+				case '%':
+					count += _putchar('%');
+					break;
+				default:
+					break;
+			}
+			i += 2;
 		}
 	}
-	count += temp_count;
 	va_end(data);
 	return (count);
 }
+
