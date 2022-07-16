@@ -23,3 +23,4 @@ count += _puts("0x");
 count += _puts(str);
 return (count);
 }
+

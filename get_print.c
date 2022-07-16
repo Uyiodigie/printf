@@ -37,3 +37,4 @@ if (func_arr[i].c == s)
 return (func_arr[i].f);
 return (NULL);
 }
+
